@@ -1,4 +1,5 @@
 @REM - CheckParameters.BAT (23 Jun 2024 // 30 Jun 2024 / 23 Jun 2024): How to Check Parameters -- Native vs 3rd Party
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1dmhacd/comment/l9x1lfh/
 @ECHO OFF
 
  ::: If you want to check for a parameter of /X or -X, the use the following format:
