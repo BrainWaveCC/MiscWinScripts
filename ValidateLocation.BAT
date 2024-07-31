@@ -1,4 +1,5 @@
 @REM - ValidateLocation.BAT (21 Jul 2024 // 23 Jun 2024 / 21 Jul 2024): Verify that your script is only running under an approved folder tree
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1e8u7z1/comment/lejxlct/
 @ECHO OFF
  SETLOCAL
  SET "#VALID_DIR=%~1" & IF "%~1"=="" SET "#VALID_DIR=C:\Temp\Junk"
