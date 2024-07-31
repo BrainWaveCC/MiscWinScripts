@@ -1,4 +1,5 @@
 @REM - HighPriority.BAT (15 Jul 2024 // 15 Jul 2024): Start a process (Wordpad) and then elevate its priority via WMIC
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1e3ouqf/comment/ldaomkd/
 @ECHO OFF
  SETLOCAL ENABLEDELAYEDEXPANSION
  SET "#EXE_LAUNCH=Write"
@@ -25,3 +26,4 @@
 :ExitBatch
  ENDLOCAL 
  TIMEOUT -1
+ EXIT /B
