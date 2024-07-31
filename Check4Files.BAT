@@ -23,9 +23,9 @@
  SET "#ROOTDIR=%~1"& IF "%~1"=="" SET "#ROOTDIR=D:\LogFiles"
  SET "#SEARCH=%~2"&  IF "%~2"=="" SET "#SEARCH=*(by* *(from*"
  SET "#LOGFILE=%~3"& IF "%~3"=="" SET "#LOGFILE=D:\Temp\Logs\FoundFiles.TXT"
- SET "#MAILSERVER=mail.somedomain.local 
- SET "#MAILSENDER=Notification@somedomain.local
- SET "#RECIPIENTS=Me@mydomain.com, You@mydomain.com
+ SET "#MAILSERVER=mail.somedomain.local"
+ SET "#MAILSENDER=Notification@somedomain.local"
+ SET "#RECIPIENTS=Me@mydomain.com, You@mydomain.com"
  SET "#MAILPORT=25"
  SET "#SUBJECT=Notification Email: Files Found"
 
