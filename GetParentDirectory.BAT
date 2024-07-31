@@ -1,4 +1,5 @@
 @REM - ASB (20 Jun 2024 // 20 Jun 2024): Determine Parent Directory
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1dk8r9z/comment/l9gf24e/
 @ECHO OFF
 
 :Variables
@@ -22,4 +23,4 @@
 
 :ExitBatch
  ENDLOCAL 
- 
+ EXIT /B
