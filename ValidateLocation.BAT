@@ -1,18 +1,11 @@
 @REM - ValidateLocation.BAT (21 Jul 2024 // 23 Jun 2024 / 21 Jul 2024): Verify that your script is only running under an approved folder tree
 @ECHO OFF
  SETLOCAL
- SET "#VALID_DIR=%~1" & IF "%~1"=="" SET "#VALID_DIR=o:\StartFolder\SubFolder1\SubFolder2"
  SET "#VALID_DIR=%~1" & IF "%~1"=="" SET "#VALID_DIR=C:\Temp\Junk"
 
 
 :Main - Select a set of folders to test for
  ECHO VALID SCRIPT ROOT = "%#VALID_DIR%"
-
- CALL :CheckLocation "D:\Temp"
- CALL :CheckLocation "C:\Windows"
- CALL :CheckLocation "L:\Data\Folder 2"
- CALL :CheckLocation "o:\StartFolder\SubFolder1\"
- CALL :CheckLocation "o:\StartFolder\SubFolder1\SubFolder2\"
 
  CALL :CheckLocation "C:\Temp"
  CALL :CheckLocation "D:\Scripts\Bat\Input"
