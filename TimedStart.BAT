@@ -1,4 +1,5 @@
 @REM - ASB (06 Jun 2024 // 06 Jun 2024): Check for Earliest Start Date
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1d9etv4/comment/l7e1t57/
 @ECHO OFF
 
 
