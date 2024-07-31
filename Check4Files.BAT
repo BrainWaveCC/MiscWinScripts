@@ -1,4 +1,5 @@
 @REM - Check4Files.BAT (31 Jul 2024 // 31 Jul 2024): Check for specific files and send alert
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1eex7hw/comment/lfigm74/
 @ECHO OFF
  
  ::: This script will search a folder and its subfolders for any files matching a specific 
