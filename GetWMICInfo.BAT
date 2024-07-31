@@ -1,4 +1,5 @@
 @REM - GetWMICInfo.BAT (26 Jun 2024 // 30 Jun 2024 / 26 Jun 2024): Obtain and Format WMIC Info
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1dp0848/comment/lae5jmk/
 @ECHO OFF
 
  ::: This script will obtain some WMIC info, and format the storage sizes
@@ -13,7 +14,7 @@
  ::: If you want the debug code to run, run the batch file with any parameter.
  :::   i.e. GetWMICInfo.BAT #
  ::: 
- ::: The full script can be found here ..... https://pastebin.com/L0PjaNK4
+ ::: The full script can also be found here ..... https://pastebin.com/L0PjaNK4
  ::: 
 
 
