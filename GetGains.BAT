@@ -1,4 +1,5 @@
 @REM - ASB (08 Jun 2024 // 08 Jun 2024): Get Gains Transferred from One Config File to Another
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1dba92w/comment/l7rbihh/
 @ECHO OFF
 
 
@@ -8,8 +9,8 @@
  
  SET @MAX=99
  SET @ROOT_DIR=%SystemDrive%\Temp\%~n0
- SET @SOURCE=%@ROOT_DIR%\Peace.TXT
- SET @DEST=%@ROOT_DIR%\Configuration.TXT
+ SET @SOURCE=%@ROOT_DIR%\GetGains-Input.TXT
+ SET @DEST=%@ROOT_DIR%\GetGains-Configuration.TXT
  SET @BACKUP=%@ROOT_DIR%\Configuration.Backup.TXT
  SET @SEARCH=Filter
 
