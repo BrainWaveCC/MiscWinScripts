@@ -1,4 +1,5 @@
 @REM - GetRegInfo.BAT (02 Jul 2024 // 02 Jul 2024): Parse Registry Entries for Folder and Version Info
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1dtr7dp/comment/lbbrdkb/
 @ECHO OFF
  SETLOCAL ENABLEDELAYEDEXPANSION
  SET #KEY=HKLM\system\CurrentControlSet\Services\someservice
