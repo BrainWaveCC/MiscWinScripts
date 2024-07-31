@@ -1,4 +1,5 @@
 @REM - ASB (20 Jun 2024 // 21 Jun 2024): Create New Files Per Line of Text
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1dko7q8/
 @ECHO OFF
 
  ::: This script will process an input file at the command-line or as a prompted request.
@@ -13,9 +14,9 @@
 :Variables
  SETLOCAL ENABLEDELAYEDEXPANSION
  
- SET #FILENAME=%~1
- SET #OUTPUT_DIR=C:\Temp\%~n0\%RANDOM%
- SET #COUNT=0
+ SET "#FILENAME=%~1"
+ SET "#OUTPUT_DIR=C:\Temp\%~n0\%RANDOM%"
+ SET "#COUNT=0"
 
 
  rem -- Get the name of the Input File
@@ -54,4 +55,6 @@
  DIR "%#OUTPUT_DIR%\???.TXT"
  TIMEOUT 60
  ENDLOCAL 
+ EXIT /B
+
  
