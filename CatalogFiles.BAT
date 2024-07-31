@@ -1,4 +1,5 @@
 @REM - CatalogFiles.BAT.BAT (27 Jul 2024 // 28 Jul 2024): Migrate files into subfolder based on first two characters of filename
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1edwyvl/comment/lfae99z/
 @ECHO OFF
  SETLOCAL
  SET #SOURCE=%~1& IF "%~1"=="" SET "#SOURCE=D:\MyLargeFolder"
