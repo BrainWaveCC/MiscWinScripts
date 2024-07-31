@@ -1,4 +1,5 @@
 @REM - GetImageURLs.BAT (23 Jun 2024 // 24 Jun 2024): Get Image URLs from HTML Download
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1dle2ze/comment/l9zvqus/
 @ECHO OFF
 
  ::: This script will return the image URLs from an HTML page.  
@@ -17,12 +18,12 @@
 :Variables
  SETLOCAL ENABLEDELAYEDEXPANSION
  
- SET #SOURCE1=https://www.newgrounds.com/art/view/thewendigo/tree
- SET #SOURCE2=https://www.newgrounds.com/art/view/missandydandy/punch-punch-forever
- SET #HTML=%TEMP%\HTML_Contents.TXT
- SET #OUTPUT=%TEMP%\Final_Output.TXT
- SET #REPLACE=%TEMP%\Replacement.TXT
- SET #SAVEDIR=%TEMP%\%~n0
+ SET "#SOURCE1=https://www.newgrounds.com/art/view/thewendigo/tree"
+ SET "#SOURCE2=https://www.newgrounds.com/art/view/missandydandy/punch-punch-forever"
+ SET "#HTML=%TEMP%\HTML_Contents.TXT"
+ SET "#OUTPUT=%TEMP%\Final_Output.TXT"
+ SET "#REPLACE=%TEMP%\Replacement.TXT"
+ SET "#SAVEDIR=%TEMP%\%~n0"
 
 
  rem -- Generate Replacement Config File for READABLE
