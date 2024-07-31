@@ -1,4 +1,5 @@
 @REM - ReadAFile.BAT (17 Jul 2024 // 17 Jul 2024): Innovative Way to Read a File and Save Each Line as a Variable
+@REM - Original Message: https://www.reddit.com/r/Batch/comments/1e5slsj/comment/ldoix5f/
 @ECHO OFF
 
  ::: This script will read an input file with up to 1000 lines (#MAXLINES=999) 
@@ -10,7 +11,7 @@
  :::   ReadAFile.BAT "x:\Some\Folder\InputFile.TXT
  ::: -----------------------------------------------
  :::
- ::: Full script can be found here .....  https://pastebin.com/4am7S36Y
+ ::: Full script can also be found here .....  https://pastebin.com/4am7S36Y
  :::
  ::: Tested on Windows 10 x64 and Windows 11
  :::
