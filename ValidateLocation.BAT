@@ -2,11 +2,18 @@
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1e8u7z1/comment/lejxlct/
 @ECHO OFF
  SETLOCAL
+ SET "#VALID_DIR=%~1" & IF "%~1"=="" SET "#VALID_DIR=o:\StartFolder\SubFolder1\SubFolder2"
  SET "#VALID_DIR=%~1" & IF "%~1"=="" SET "#VALID_DIR=C:\Temp\Junk"
 
 
 :Main - Select a set of folders to test for
  ECHO VALID SCRIPT ROOT = "%#VALID_DIR%"
+
+ CALL :CheckLocation "D:\Temp"
+ CALL :CheckLocation "C:\Windows"
+ CALL :CheckLocation "L:\Data\Folder 2"
+ CALL :CheckLocation "o:\StartFolder\SubFolder1\"
+ CALL :CheckLocation "o:\StartFolder\SubFolder1\SubFolder2\"
 
  CALL :CheckLocation "C:\Temp"
  CALL :CheckLocation "D:\Scripts\Bat\Input"

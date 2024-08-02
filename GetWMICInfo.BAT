@@ -2,28 +2,30 @@
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1dp0848/comment/lae5jmk/
 @ECHO OFF
 
- ::: This script will obtain some WMIC info, and format the storage sizes
- ::: to KB, MB, GB or TB as preferred. For convenience, two subroutines are
- ::: provided.  One of the subroutines uses all native code, and the other 
- ::: relies on a 3rd party utility: CCALC.EXE 
- ::: (https://www.majorgeeks.com/files/details/brainwave_ccalc.html)
- ::: 
- ::: I was going to provide only the native option, but file sizes are 
- ::: regularly large enough to generate errors, so I provided both routines.
- ::: 
- ::: If you want the debug code to run, run the batch file with any parameter.
- :::   i.e. GetWMICInfo.BAT #
- ::: 
- ::: The full script can also be found here ..... https://pastebin.com/L0PjaNK4
- ::: 
+ :::  This script will obtain some WMIC info, and format the storage sizes
+ :::  to KB, MB, GB or TB as preferred. For convenience, two subroutines are
+ :::  provided.  One of the subroutines uses all native code, and the other
+ :::  relies on a 3rd party utility: CCALC.EXE
+ :::  (https://www.majorgeeks.com/files/details/brainwave_ccalc.html)
+ :::
+ :::  I was going to provide only the native option, but file sizes are
+ :::  regularly large enough to generate errors, so I provided both routines.
+ :::
+ :::  If you want the debug code to run, run the batch file with any parameter.
+ :::    i.e. GetWMICInfo.BAT #
+ :::
+ :::  The Full script can also be found here ..... https://pastebin.com/L0PjaNK4
+ :::
+ :::  Tested on Windows 10 x64 and Windows 11
+ :::
 
 
 :Variables
  SETLOCAL ENABLEDELAYEDEXPANSION
  SET #DEBUG=%~1
  SET #ITERATIONS=19
- 
- 
+
+
  rem -- Parse WMIC and format returned drive info
 :ParseWMIC
  FOR /F "SKIP=2 TOKENS=1-7 DELIMS=," %%a IN ('WMIC PARTITION GET Diskindex^,Name^,Index^,Description^,Size /FORMAT:CSV') DO (
@@ -64,9 +66,9 @@
 
 :ExitBatch
  TIMEOUT 60
- ENDLOCAL 
+ ENDLOCAL
  GOTO :EOF
- 
+
 
  rem -- SUBROUTINE: Convert Large Number to KB, MB, GB, TB or PB (using CCALC.EXE)
 :ConvertNumber
@@ -106,4 +108,3 @@
  SET /A %~3=!#NUM! %#OPERAND% 2>NUL
  SET %~3=!%~3! %~2
  GOTO :EOF
-                          

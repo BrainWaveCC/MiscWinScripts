@@ -2,18 +2,18 @@
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1e5slsj/comment/ldoix5f/
 @ECHO OFF
 
- ::: This script will read an input file with up to 1000 lines (#MAXLINES=999) 
- ::: and save each line as a variable (#LINE000000 to #LINE000999) as necessary.
- ::: How high you can go will depend on system memory, and possibly some other 
- ::: heap or stack resource.  The largest file I tested was one with 823 lines.
+ :::  This script will read an input file with up to 1000 lines (#MAXLINES=999)
+ :::  and save each line as a variable (#LINE000000 to #LINE000999) as necessary.
+ :::  How high you can go will depend on system memory, and possibly some other
+ :::  heap or stack resource.  The largest file I tested was one with 823 lines.
  :::
- ::: You would call this from the command-line as:
- :::   ReadAFile.BAT "x:\Some\Folder\InputFile.TXT
- ::: -----------------------------------------------
+ :::  You would call this from the command-line as:
+ :::    ReadAFile.BAT "x:\Some\Folder\InputFile.TXT
+ :::  -----------------------------------------------
  :::
- ::: Full script can also be found here .....  https://pastebin.com/4am7S36Y
+ :::  Full script can also be found here .....  https://pastebin.com/4am7S36Y
  :::
- ::: Tested on Windows 10 x64 and Windows 11
+ :::  Tested on Windows 10 x64 and Windows 11
  :::
 
 
@@ -27,7 +27,7 @@
  IF NOT EXIST %#FILENAME% (
 	 ECHO FILE NOT FOUND: %#FILENAME%
 	 GOTO :ExitBatch
- ) 
+ )
 
 
 :ReadFile -- Read a file up to maxlines+1 (0 - #MAXLINES)
@@ -37,13 +37,13 @@
 		 SET #COUNT=!#COUNT:~-6!
 		 SET /P #LINE!#COUNT!=
 	 )
- ) 
+ )
 
 
 :FinalReport -- Show all the variables with the lines that were read
  SET #LINE
 
- 
+
 :ExitBatch
  TIMEOUT 60
- ENDLOCAL 
+ ENDLOCAL

@@ -4,8 +4,8 @@
 
 :Variables
  SETLOCAL ENABLEDELAYEDEXPANSION
- 
- SET #INPUT=%~1
+
+ SET "#INPUT=%~1"
  IF NOT DEFINED #INPUT SET /P "#INPUT=Enter a filename or folder name: "
  SET #INPUT=%#INPUT:"=%
 
@@ -19,8 +19,8 @@
  ECHO -- You entered ...............: "%#INPUT%"
  ECHO -- The associated folder is ..: "%#PARENTDIR%"
  TIMEOUT 60
- 
+
 
 :ExitBatch
- ENDLOCAL 
+ ENDLOCAL
  EXIT /B

@@ -2,32 +2,34 @@
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1dmhacd/comment/l9x1lfh/
 @ECHO OFF
 
- ::: If you want to check for a parameter of /X or -X, the use the following format:
- :::   CALL :GetParams "X EXTENDED" & IF DEFINED #OK (execute whatever commands you want here)
+ :::  If you want to check for a parameter of /X or -X, the use the following format:
+ :::    CALL :GetParams "X EXTENDED" & IF DEFINED #OK (execute whatever commands you want here)
  :::
- ::: You would call this from the command-line as:
- :::   CheckParameters.BAT /X
- :::   CheckParameters.BAT -X
- ::: -----------------------------------------------
+ :::  You would call this from the command-line as:
+ :::    CheckParameters.BAT /X
+ :::    CheckParameters.BAT -X
+ :::  -----------------------------------------------
  :::
- ::: If you want to check for a parameter of /X or -X that contains a value, then use the following format:
- :::   CALL :GetParams "X EXTENDED" #X_VARIABLE & IF DEFINED #X_VARIABLE (execute whatever commands you want here)
+ :::  If you want to check for a parameter of /X or -X that contains a value, then use the following format:
+ :::    CALL :GetParams "X EXTENDED" #X_VARIABLE & IF DEFINED #X_VARIABLE (execute whatever commands you want here)
  :::
- ::: You would call this from the command-line as:
- :::   CheckParameters.BAT /X:1
- :::   CheckParameters.BAT /X:NoSpaces
- :::   CheckParameters.BAT /X:"Value with Spaces"
+ :::  You would call this from the command-line as:
+ :::    CheckParameters.BAT /X:1
+ :::    CheckParameters.BAT /X:NoSpaces
+ :::    CheckParameters.BAT /X:"Value with Spaces"
  :::
- ::: You can do this natively or with a 3rd party utility that really streamlines the process.
- ::: I use this for pretty much all of my major scripts.
+ :::  You can do this natively or with a 3rd party utility that really streamlines the process.
+ :::  I use this for pretty much all of my major scripts.
  :::
- ::: The :FoundParam routine is just here for testing.  Not needed for production at all.
- ::: All you need for this to work is the variable block, and EITHER :GetParams OR :GetParams2
+ :::  The :FoundParam routine is just here for testing.  Not needed for production at all.
+ :::  All you need for this to work is the variable block, and EITHER :GetParams OR :GetParams2
  :::
- ::: Full script can be found here .....  https://pastebin.com/wjs4Hz5k
- ::: Script without debug info .........  https://pastebin.com/5zAGAyrL
+ :::  Full script can also be found here .....  https://pastebin.com/wjs4Hz5k
+ :::  Script without debug info ..............  https://pastebin.com/5zAGAyrL
  :::
- ::: I started my testing with: CheckParameters.BAT /H /S /SHOW /L:C:\TEMP\TEST.TXT
+ :::  I started my testing with: CheckParameters.BAT /H /S /SHOW /L:C:\TEMP\TEST.TXT
+ :::
+ :::  Tested on Windows 10 x64 and Windows 11
  :::
 
 
@@ -103,7 +105,7 @@
 
 :ExitBatch
  ENDLOCAL
- EXIT /B  
+ EXIT /B
 
 
  rem -- SUBROUTINE: Use Native Batch Commands to Capture Selected Parameters

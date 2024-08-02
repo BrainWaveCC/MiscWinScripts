@@ -13,8 +13,10 @@
  :::  https://github.com/BrainWaveCC/MiscWinScripts
  :::
  :::  NOTE: I like prefacing my variables with # or @ because then it makes it less
- :::        likely that they will clash with anything else, and a simple SET @ or SET # 
- :::        command will expose all my variables at one time.
+ :::        likely that they will clash with anything else, and a simple command like
+ :::        "SET @" or "SET #" will enumerate all my variables at one time.
+ :::
+ :::  Tested on Windows 10 x64 and Windows 11
  :::
 
 

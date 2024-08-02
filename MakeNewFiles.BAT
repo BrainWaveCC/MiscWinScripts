@@ -2,18 +2,24 @@
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1dko7q8/
 @ECHO OFF
 
- ::: This script will process an input file at the command-line or as a prompted request.
- ::: The output will be stored in the %#OUTPUT_DIR% variable (default = C:\Temp)
- ::: It will read the lines of the input file, and write that line to a file based on
- ::: the current line number (in 3-digit format: 001, 002, etc).  If the first 3 digits
- ::: of the current line (%#PREFIX%) match the count, then those 3 digits plus a space 
- ::: will be excluded from the output.  The destinaton folder will be displayed at 
- ::: the conclusion of the script.  Adjust accordingly.
+ :::  This script will process an input file at the command-line or as a 
+ :::  prompted request. The output will be stored in the %#OUTPUT_DIR% 
+ :::  variable (default = C:\Temp)
+ :::
+ :::  It will read the lines of the input file, and write that line to a 
+ :::  file based on the current line number (in 3-digit format: 001, 002, etc).  
+ :::  If the first 3 digits of the current line (%#PREFIX%) match the count, 
+ :::  then those 3 digits plus a space will be excluded from the output.  
+ :::  The destinaton folder will be displayed at the conclusion of the script.  
+ :::  Adjust accordingly.
+ :::
+ :::  Tested on Windows 10 x64 and Windows 11
+ :::
 
 
 :Variables
  SETLOCAL ENABLEDELAYEDEXPANSION
- 
+
  SET "#FILENAME=%~1"
  SET "#OUTPUT_DIR=C:\Temp\%~n0\%RANDOM%"
  SET "#COUNT=0"
@@ -24,8 +30,8 @@
  IF NOT DEFINED #FILENAME SET /P "#FILENAME=Enter a filename to process: "
  IF NOT DEFINED #FILENAME GOTO :GetFilename
  SET #FILENAME="%#FILENAME:"=%"
- 
- 
+
+
  rem -- Loop Through File and Save Each Line in a New File
 :Main
  IF NOT EXIST "%#OUTPUT_DIR%" MD "%#OUTPUT_DIR%" >NUL 2>NUL
@@ -48,13 +54,12 @@
 		 ECHO !#THISLINE!>!#OUTPUT!
 	 )
  )
- 
+
 
 :ExitBatch
  ECHO:
  DIR "%#OUTPUT_DIR%\???.TXT"
  TIMEOUT 60
- ENDLOCAL 
+ ENDLOCAL
  EXIT /B
 
- 

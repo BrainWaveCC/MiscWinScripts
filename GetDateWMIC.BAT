@@ -14,6 +14,8 @@
  :::  See GetDateBWCC.BAT at my GitHub scripts repository for the version that uses 
  :::  the DATEINFO utility: https://github.com/BrainWaveCC/MiscWinScripts
  :::
+ :::  Tested on Windows 10 x64 and Windows 11
+ :::
 
  setlocal EnableDelayedExpansion
 

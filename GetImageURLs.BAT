@@ -2,22 +2,25 @@
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1dle2ze/comment/l9zvqus/
 @ECHO OFF
 
- ::: This script will return the image URLs from an HTML page.  
- ::: I performed rudimentary testing only.  It relies on a 3rd party utility:
- ::: READABLE.EXE (https://www.majorgeeks.com/files/details/readable.html)
- ::: 
- ::: I tested https://www.newgrounds.com/art/view/thewendigo/tree and
- ::: https://www.newgrounds.com/art/view/missandydandy/punch-punch-forever
+ :::  This script will return the image URLs from an HTML page.
+ :::  I performed rudimentary testing only.  It relies on a 3rd party utility:
+ :::  READABLE.EXE (https://www.majorgeeks.com/files/details/readable.html)
  :::
- ::: Rather than supply multiple files, I just had the script generate the 
- ::: search/replace config file used by READABLE.   
- ::: 
- ::: Once the files have been parsed, I download them to the %#SAVEDIR% folder.
+ :::  I tested https://www.newgrounds.com/art/view/thewendigo/tree and
+ :::  https://www.newgrounds.com/art/view/missandydandy/punch-punch-forever
+ :::
+ :::  Rather than supply multiple files, I just had the script generate the
+ :::  search/replace config file used by READABLE.
+ :::
+ :::  Once the files have been parsed, I download them to the %#SAVEDIR% folder.
+ :::
+ :::  Tested on Windows 10 x64 and Windows 11
+ :::
 
 
 :Variables
  SETLOCAL ENABLEDELAYEDEXPANSION
- 
+
  SET "#SOURCE1=https://www.newgrounds.com/art/view/thewendigo/tree"
  SET "#SOURCE2=https://www.newgrounds.com/art/view/missandydandy/punch-punch-forever"
  SET "#HTML=%TEMP%\HTML_Contents.TXT"
@@ -28,7 +31,7 @@
 
  rem -- Generate Replacement Config File for READABLE
 :MakeReplacement
- IF NOT EXIST "%#REPLACE%" ( 
+ IF NOT EXIST "%#REPLACE%" (
 	 ECHO \/;/
 	 ECHO \";"
 	 ECHO =;\n
@@ -36,12 +39,12 @@
 	 ECHO ";\n
  ) >"%#REPLACE%"
 
- 
+
  rem -- Download HTML and parse it using READABLE and FINDSTR; ignore icons and thumbnails
 :ProcessFile
  ( FOR /F "TOKENS=1* DELIMS==" %%V IN ('SET #SOURCE 2^>NUL') DO (
 	 CURL "!%%~V!" -o "%#HTML%"
-	 READABLE "%#HTML%" -f "http:;https:" -x -r "%#REPLACE%" --sk "/thumb;/icons;-icon" | FINDSTR /i ".png .jpg .jpeg" 
+	 READABLE "%#HTML%" -f "http:;https:" -x -r "%#REPLACE%" --sk "/thumb;/icons;-icon" | FINDSTR /i ".png .jpg .jpeg"
  )) >"%#OUTPUT%"
 
 
@@ -59,4 +62,6 @@
  IF EXIST "%#OUTPUT%" TYPE "%#OUTPUT%"
  IF EXIST "%#SAVEDIR%" DIR "%#SAVEDIR%"
  TIMEOUT 60
- ENDLOCAL 
+ ENDLOCAL
+ EXIT /B
+

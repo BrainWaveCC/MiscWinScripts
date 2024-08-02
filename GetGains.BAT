@@ -6,15 +6,15 @@
  rem -- Initialize Environment Variables
 :Variables
  SETLOCAL ENABLEDELAYEDEXPANSION
- 
- SET @MAX=99
- SET @ROOT_DIR=%SystemDrive%\Temp\%~n0
- SET @SOURCE=%@ROOT_DIR%\GetGains-Input.TXT
- SET @DEST=%@ROOT_DIR%\GetGains-Configuration.TXT
- SET @BACKUP=%@ROOT_DIR%\Configuration.Backup.TXT
- SET @SEARCH=Filter
 
- 
+ SET "@MAX=99"
+ SET "@ROOT_DIR=%SystemDrive%\Temp\%~n0"
+ SET "@SOURCE=%@ROOT_DIR%\GetGains-Input.TXT"
+ SET "@DEST=%@ROOT_DIR%\GetGains-Configuration.TXT"
+ SET "@BACKUP=%@ROOT_DIR%\Configuration.Backup.TXT"
+ SET "@SEARCH=Filter"
+
+
  rem -- Get Values from Source File
 :GetValues
  FOR /F "TOKENS=2,9 DELIMS=: " %%L IN ('TYPE "%@SOURCE%" ^| FIND "%@SEARCH% " 2^>NUL') DO SET @GAIN%%~L=%%~M
@@ -23,7 +23,7 @@
  rem -- Set Values into Configuration File
 :SetValues
  IF NOT DEFINED @GAIN1 GOTO :ExitBatch
- 
+
  rem -- Next 4 Lines are Just Some Housekeeping for Testing
  ECHO Creating Backup of Configuration File
  COPY "%@DEST%" "%@BACKUP%" /Y
@@ -46,3 +46,4 @@
 :ExitBatch
  FOR %%V IN ("%@SOURCE%" "%@DEST%") DO TYPE %%V
  ENDLOCAL
+ EXIT /B

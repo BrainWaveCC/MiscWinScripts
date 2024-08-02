@@ -7,7 +7,7 @@
  SET "#PRI_LEVEL=High Priority"
  SET "#PRI_LEVEL=Above Normal"
 
- 
+
 :LaunchApp - Start up the %#EXE_LAUNCH%
  START "Starting %#EXE_LAUNCH%" %#EXE_LAUNCH%
 
@@ -22,8 +22,8 @@
 :SetPriority - Set priority to High
  WMIC PROCESS WHERE NAME="%#EXE_VERIFY%" CALL SETPRIORITY "%#PRI_LEVEL%"
 
- 
+
 :ExitBatch
- ENDLOCAL 
+ ENDLOCAL
  TIMEOUT -1
  EXIT /B
