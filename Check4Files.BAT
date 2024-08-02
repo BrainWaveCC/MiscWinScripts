@@ -2,20 +2,25 @@
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1eex7hw/comment/lfigm74/
 @ECHO OFF
  
- ::: This script will search a folder and its subfolders for any files matching a specific 
- ::: pattern that you supply.  If any files are found, they will be mailed via a Notification
- ::: alert.
+ :::  This script will search a folder and its subfolders for any files matching a 
+ :::  specific pattern that you supply.  If any files are found, they will be mailed 
+ :::  via a Notification alert.
  :::
  ::: You would call this from the command-line as:
  :::   Check4Files.BAT [starting_search_folder] [search_pattern(s)] [logfile_to_capture_search_info]
  ::: -----------------------------------------------
  :::
+ :::  Full script can be found here:
+ :::      https://github.com/BrainWaveCC/MiscWinScripts/blob/main/Check4Files.BAT
  :::
- ::: Full script can be found here:
- :::     https://github.com/BrainWaveCC/MiscWinScripts/blob/main/Check4Files.BAT
+ :::  Running Check4Files without any parameters, is equivalent to the following:
+ :::      Check4Files.BAT "D:\LogFiles" "*(by* *(from*" "D:\Temp\Logs\FoundFiles.TXT" 
  :::
- ::: Running Check4Files without any parameters, is equivalent to the following:
- :::     Check4Files.BAT "D:\LogFiles" "*(by* *(from*" "D:\Temp\Logs\FoundFiles.TXT" 
+ :::  NOTE: I like prefacing my variables with # or @ because then it makes it less
+ :::        likely that they will clash with anything else, and a simple command like
+ :::        "SET @" or "SET #" will enumerate all my variables at one time.
+ :::
+ :::  Tested on Windows 10 x64 and Windows 11
  :::
 
 
