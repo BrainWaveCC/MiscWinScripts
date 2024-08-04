@@ -44,7 +44,7 @@
  :::
 
 
-:Check4Essentials -- Check for Essential Utilities and/or Scripts
+:Check4Essentials -- Check for Essential Utilities
  FINDFILES -w -m -f DATEINFO.EXE GETINPUT.EXE SLEEP.EXE TASKLIST.EXE TASKKILL.EXE
  IF ERRORLEVEL 64 GOTO :ExitBatch
 
@@ -61,6 +61,7 @@
  SET "#DATEFMT=-F "mm/dd/yyyy hh:nn:ss""          // date/time format for routines
 
  rem -- Get the time or date/time when the script should continue after waiting; if no value, set 5 min from now
+ FOR /F "TOKENS=*" %%D IN ('DATEINFO -S %#DATEFMT% -Q 2^>NUL') DO SET "#START_TIME=%%D"
  FOR /F "TOKENS=*" %%D IN ('DATEINFO -Z "00:05:01" %#DATEFMT% -Q 2^>NUL') DO SET "#DEFAULT_TIME=%%D"
  SET "#WAITUNTIL=%~1"
  IF "%~1"=="" (
@@ -70,14 +71,14 @@
 		 IF "%%~F"=="" (SET "#WAITUNTIL=%%D %%E") ELSE (SET "#WAITUNTIL=%#DEFAULT_TIME%")
 	 )
  )
- FOR /F "TOKENS=*" %%T IN ('DATEINFO -T "%#WAITUNTIL%" -E "minutes" -Q 2^>NUL') DO SET /A "#DURATION=%%T"
+ IF "%#START_TIME%" GEQ "%#WAITUNTIL%" (SET "#DURATION=0") ELSE ( FOR /F "TOKENS=*" %%T IN ('DATEINFO -T "%#WAITUNTIL%" -E "minutes" -Q 2^>NUL') DO SET /A "#DURATION=%%T" )
 
 
 :GenerateTempScript -- Generate TimerScript to track waiting time
  ( ECHO @rem -- Generated on %DATE% at %TIME: =0% by %~n0
    ECHO @ECHO OFF
    ECHO :WaitUntil
-   ECHO  SLEEP 5
+   ECHO  IF %#DURATION% NEQ 0 SLEEP 5
    ECHO  FOR /F "TOKENS=*" %%%%d IN ^('DATEINFO -S %#DATEFMT% -Q 2^^^>NUL'^) DO SET "#CURRENT_TIME=%%%%d"
    ECHO  TASKLIST /FI "IMAGENAME EQ %#GETINPUT_RND%" ^| FIND /I "%#GETINPUT_RND%"
    ECHO  IF ERRORLEVEL 1 GOTO :Finish
@@ -103,7 +104,7 @@
  ECHO:
  ECHO Hello %Username%
  ECHO Today is %DATE% and %TIME%
- ECHO You have about %#DURATION% minutes (until %#WAITUNTIL%) to type in the pass code.
+ ECHO You have about %#DURATION% minute(s) -- until %#WAITUNTIL% -- to type in the pass code.
  ECHO:
  START /MIN "Process Watchdog" "%#TIMER_SCRIPT%"
  FOR /F "TOKENS=*" %%I IN ('%TEMP%\%#GETINPUT_RND% -p "Please enter the pass code: " -Q 2^>NUL') DO SET "#QQ=%%I"
