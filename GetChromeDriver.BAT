@@ -47,6 +47,7 @@
 
 
 :ExitBatch
+ REM FOR %%V IN ("%#HTML%" "%#REPLACE%") DO IF EXIST "%%~V" DEL "%%~V" >NUL
  TIMEOUT 60
  ENDLOCAL
  EXIT /B
