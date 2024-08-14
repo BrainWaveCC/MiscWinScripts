@@ -53,11 +53,7 @@
 
 :Routine2 -- Max iterations of the standard counting method with GOTO (max = 999 characters)
  CALL :GetTime #STIME2
- FOR /L %%a IN (0,1,%#ITERATIONS%) DO (
-	 SET "#LEN="
-	 FOR /L %%C IN (0,1,%#MAXLEN%) DO IF "!#CHECK_THIS:~%%C,1!"=="" (SET "#LEN=%%C" & GOTO :Continue)
- )
-:Continue -- after posssibly aborted FOR loop
+ FOR /L %%a IN (0,1,%#ITERATIONS%) DO CALL :GetLength #CHECK_THIS
  CALL :GetTime #ETIME2
  CALL :ShowSummary Method #2 - FOR 0-999 with an Early Quit condition
 
@@ -114,12 +110,8 @@
  GOTO :EOF
 
 
-:GetLength -- SUBROUTINE: Get String Length {%1 = String Variable} -- Very Slow, Not Used
+:GetLength -- SUBROUTINE: Get String Length {%1 = String Variable}
  SET "#TEMPSTR=!%~1!"
  SET "#LEN="
- SET "#COUNT=1"
-
-:LoopM2
- IF "!#TEMPSTR:~%#COUNT%,1!"=="" (SET "#LEN=%#COUNT%" & GOTO :EOF)
- SET /A "#COUNT+=1"
- GOTO :LoopM2
+ FOR /L %%C IN (0,1,%#MAXLEN%) DO IF "!#TEMPSTR:~%%C,1!"=="" (SET "#LEN=%%C" & GOTO :EOF)
+ GOTO :EOF
