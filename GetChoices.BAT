@@ -26,7 +26,7 @@
  :::  When the script is run without a parameter, the variables A, B and C will be set based on user response to Y/N questions
 
 
-:Variables -- v1.0.0
+:Variables -- v1.0.1
  SETLOCAL
  SET "#CHOICE=CHOICE /T 10 /C YN /D Y /M"
  
@@ -42,7 +42,7 @@
 	 %#CHOICE% "B? " & IF NOT ERRORLEVEL 2 (SET "B=1") ELSE (SET "B=2")
 	 %#CHOICE% "C? " & IF NOT ERRORLEVEL 2 (SET "C=1") ELSE (SET "C=2")
  )	 
- CALL :DisplayVars 1
+ CALL :DisplayVars "1 Normal"
  ENDLOCAL
 
 
@@ -57,7 +57,7 @@
 	 %#CHOICE% "B? " & CALL SET "B=%%ERRORLEVEL%%"
 	 %#CHOICE% "C? " & CALL SET "C=%%ERRORLEVEL%%"
  )	 
- CALL :DisplayVars 2
+ CALL :DisplayVars "2 using CALL"
  ENDLOCAL
 
 
@@ -68,11 +68,11 @@
 	 SET "B=1"
 	 SET "C=1"
  ) ELSE (
-	 %#CHOICE% "A? " & CALL SET "A=!ERRORLEVEL!"
-	 %#CHOICE% "B? " & CALL SET "B=!ERRORLEVEL!"
-	 %#CHOICE% "C? " & CALL SET "C=!ERRORLEVEL!"
+	 %#CHOICE% "A? " & SET "A=!ERRORLEVEL!"
+	 %#CHOICE% "B? " & SET "B=!ERRORLEVEL!"
+	 %#CHOICE% "C? " & SET "C=!ERRORLEVEL!"
  )	 
- CALL :DisplayVars 3
+ CALL :DisplayVars "3 using SETLOCAL ENABLEDELAYEDEXPANSION"
  ENDLOCAL
 
 
@@ -85,7 +85,7 @@
  ) ELSE (
 	 CALL :GetMyChoices
  )	 
- CALL :DisplayVars 4
+ CALL :DisplayVars "4 using a subroutine"
  ENDLOCAL
 
 
@@ -94,9 +94,9 @@
  EXIT /B
 
  
-:DisplayVars
+:DisplayVars -- Display the output of variables A, B and C, along with a message header {%1 = message}
  ECHO:
- ECHO *** Method #%1 ***
+ ECHO *** Method #%~1 ***
  ECHO A=%A%
  ECHO B=%B%
  ECHO C=%C%
@@ -106,7 +106,10 @@
 
 
 :GetMyChoices -- SUBROUTINE: Get CHOICE and evaluate with normal %ERRORLEVEL% vars
- %#CHOICE% "A? " & SET "A=%ERRORLEVEL%"
- %#CHOICE% "B? " & SET "B=%ERRORLEVEL%"
- %#CHOICE% "C? " & SET "C=%ERRORLEVEL%"
+ %#CHOICE% "A? "
+ SET "A=%ERRORLEVEL%"
+ %#CHOICE% "B? " 
+ SET "B=%ERRORLEVEL%"
+ %#CHOICE% "C? " 
+ SET "C=%ERRORLEVEL%"
  GOTO :EOF
