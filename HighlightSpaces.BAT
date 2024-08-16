@@ -34,7 +34,7 @@
  FOR %%P IN ("#FILEPATH1 #HIGHLIGHT1"; "#FILEPATH2 #HIGHLIGHT2"; "#FILEPATH3 #HIGHLIGHT3") DO CALL :MakeNewVar %%~P
 
 
-:ExitBatch -- Display final product and exit
+:ExitBatch -- Wrap things up and exit
  rem SET #
  TIMEOUT 60
  ENDLOCAL

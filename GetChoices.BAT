@@ -89,7 +89,7 @@
  ENDLOCAL
 
 
-:ExitBatch
+:ExitBatch -- Wrap things up and exit
  ENDLOCAL
  EXIT /B
 

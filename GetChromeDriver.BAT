@@ -1,4 +1,4 @@
-@REM - GetChromeDriver.BAT (12 Aug 2024 // 12 Aug 2024): Get Latest Version of Chrome Driver via JSON endpoints list
+@REM - GetChromeDriver.BAT (12 Aug 2024 // 15 Aug 2024 / 12 Aug 2024): Get Latest Version of Chrome Driver via JSON endpoints list
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1eqa99v/comment/lhrdlbu/
 @ECHO OFF
 
@@ -24,30 +24,30 @@
  :::
 
 
-:Variables
+:Variables -- v1.0.1
  SETLOCAL
-
  SET "#SOURCE=https://googlechromelabs.github.io/chrome-for-testing/"
  SET "#HTML=%TEMP%\HTML_Contents.TXT"
  SET "#REPLACE=%TEMP%\Replacement.TXT"
- SET "#SEARCHFOR=win32/chromedriver"
+ SET "#SEARCHFOR=/win32/chromedriver"
 
 
 :MakeReplacement -- Generate Replacement Config File for READABLE
- (	 ECHO ^<;\n^<
+ ( rem - Write to File
+	 ECHO ^<;\n^<
 	 ECHO ^>;^>\n
  ) >"%#REPLACE%"
 
 
-:GetLatestURL -- Parse the URL contents using READABLE and FINDSTR to isolate the desired URLs
+:GetLatestURL -- Parse the URL contents using READABLE and FIND to isolate the desired URLs
  CURL "%#SOURCE%" -o "%#HTML%"
- FOR /F "TOKENS=*" %%U IN ('READABLE "%#HTML%" -f "stable" -x -r "%#REPLACE%" ^| FINDSTR /I "%#SEARCHFOR%"') DO IF NOT DEFINED #DOWNLOAD_URL SET "#DOWNLOAD_URL=%%~U"
+ FOR /F "TOKENS=*" %%U IN ('READABLE "%#HTML%" -f "stable" -x -r "%#REPLACE%" ^| FIND /I "%#SEARCHFOR%"') DO IF NOT DEFINED #DOWNLOAD_URL SET "#DOWNLOAD_URL=%%~U"
  ECHO:
  ECHO Latest Stable Chrome Driver is: "%#DOWNLOAD_URL%"
 
 
-:ExitBatch
- REM FOR %%V IN ("%#HTML%" "%#REPLACE%") DO IF EXIST "%%~V" DEL "%%~V" >NUL
+:ExitBatch -- Wrap things up and exit
+ IF NOT DEFINED DEBUG FOR %%V IN ("%#HTML%" "%#REPLACE%") DO IF EXIST "%%~V" DEL "%%~V" >NUL
  TIMEOUT 60
  ENDLOCAL
  EXIT /B
