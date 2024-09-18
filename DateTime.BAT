@@ -1,4 +1,4 @@
-@REM - DateTime.BAT (24 May 1999 // 17 Sep 2024): Multiple methods for capturing date/time variable data
+@REM - DateTime.BAT (24 May 1999 // 18 Sep 2024 / 17 Sep 2024): Multiple methods for capturing date/time variable data
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1fjeqd5/date_and_time_routines_using_native_and_3rd_party/
 @ECHO OFF
 
@@ -33,15 +33,15 @@
  :::  or anywhere in your current path.
  :::
  :::  The DOFF.EXE utility used to be available at http://www.jfitz.com/dos/index.html@DOFF
- :::  which provided another method of date/time variables (see section 7 below).
+ :::  which provided another method of date/time manipulation (see section 7 below).
  :::  If DOFF.EXE is not found at time of execution, section #7 will simply be skipped.
  :::
  :::  Full script can be found here:
  :::      https://github.com/BrainWaveCC/MiscWinScripts/blob/main/DateTime.BAT
  :::
- :::  NOTE: I like prefacing my variables with @ or @ because then it makes it less
+ :::  NOTE: I like prefacing my variables with # or @ because then it makes it less
  :::        likely that they will clash with anything else, and a simple command like
- :::        "SET @" or "SET #" will enumerate all my variables at one time.
+ :::        "SET #" or "SET @" will enumerate all my variables at one time.
  :::
  :::  Tested on Windows 10 x64 and Windows 11
  :::  (been using variations of this script for testing since NT4, actually)
@@ -50,10 +50,10 @@
 
  rem ==========================================================================
  rem === Display Various Date/Time Calculations
- rem === Updated On: 17 Sep 2024 / 10 Dec 2019 / 20 Dec 2018
+ rem === Updated On: 18 Sep 2024 / 17 Sep 2024 / 10 Dec 2019 / 20 Dec 2018
  rem ==========================================================================
 :DisplayAll
- SETLOCAL ENABLEDELAYEDEXPANSION & CALL :ShowStatus "STARTED" v9.6.0.900
+ SETLOCAL ENABLEDELAYEDEXPANSION & CALL :ShowStatus "STARTED" v9.6.0.910
 
  rem -- Main Variables
  SET @MSNOW_COMPATIBILITY=TRUE
@@ -63,7 +63,7 @@
  IF ERRORLEVEL 1 (SET #DOFF=) ELSE (SET #DOFF=7)
 
  rem -- Main Routine
- FOR %%i IN (1 2 3 4 5 6 %#DOFF% 8 9) DO CALL :GetDate%%i
+ FOR %%i IN (1 2 3 4 5 6 %#DOFF% 8 9 10) DO CALL :GetDate%%i
  CALL :ShowStatus "FINISHED"
  ENDLOCAL
  EXIT /B
@@ -71,7 +71,7 @@
 
  rem ==========================================================================
  rem === SUBROUTINE: Display the Variables for Each Section
- rem === Updated On: 17 Sep 2024 / 05 Apr 2017 / 21 Apr 2015
+ rem === Updated On: 18 Sep 2024 / 17 Sep 2024 / 05 Apr 2017 / 21 Apr 2015
  rem ==========================================================================
 :Display
  rem %1 = Long Name of Section
@@ -80,23 +80,25 @@
  ECHO:
  ECHO Output for: %1
  ECHO ---------------------------------------------------------------------------
- ECHO %%DATE%%    = %DATE%
- ECHO %%TIME%%    = %TIME%
+ ECHO %%DATE%% ......... %DATE%
+ ECHO %%TIME%% ......... %TIME%
  ECHO:
- FOR /F "TOKENS=*" %%D IN ('DATE /T') DO ECHO DATE /T   = %%D
- FOR /F "TOKENS=*" %%T IN ('TIME /T') DO ECHO TIME /T   = %%T
+ FOR /F "TOKENS=*" %%D IN ('DATE /T') DO ECHO DATE /T ........ %%D
+ FOR /F "TOKENS=*" %%T IN ('TIME /T') DO ECHO TIME /T ........ %%T
  ECHO:
- FOR /F "SKIP=1 TOKENS=1,2,5,8,9 DELIMS=, " %%D IN ('WMIC PATH win32_localTime GET * /FORMAT:TABLE ^| FIND " "') DO ECHO WMIC INFO = Day=%%D, Month=%%F, Year=%%H, DayOfWeek=%%E, WeekInMonth=%%G
+ FOR /F "SKIP=1 TOKENS=1,2,5,8,9 DELIMS=, " %%D IN ('WMIC PATH win32_localTime GET * /FORMAT:TABLE ^| FIND " "') DO ECHO WMIC INFO ...... Day=%%D, Month=%%F, Year=%%H, DayOfWeek=%%E, WeekInMonth=%%G
  ECHO:
- FOR /F "TOKENS=*" %%D IN ('NOW') DO ECHO NOW       = %%D
+ FOR /F "TOKENS=*" %%D IN ('NOW') DO ECHO NOW ............ %%D
  ECHO:
 
  IF DEFINED #DOFF (
-	 FOR /F "TOKENS=*" %%D IN ('DOFF "mm/dd/yyyy hh:mi:ss"') DO ECHO DOFF      = %%D
+	 FOR /F "TOKENS=*" %%D IN ('DOFF "mm/dd/yyyy hh:mi:ss"') DO ECHO DOFF ........... %%D
 	 ECHO:
  )
 
- FOR /F "TOKENS=*" %%D IN ('DATEINFO -s -f "mm/dd/yyyy hh:nn:ss.zz" -q') DO ECHO DATEINFO  = %%D
+ FOR /F "TOKENS=*" %%D IN ('Powershell Get-Date -Format ^'MM/dd/yyyy hh:mm:ss  /  dd MMM yyyy hh:mm:ss^' ') DO ECHO Powershell ..... %%D
+ ECHO:
+ FOR /F "TOKENS=*" %%D IN ('DATEINFO -s -f "mm/dd/yyyy hh:nn:ss.zz  /  dd mmm yyyy hh:nn:ss.zz" -q') DO ECHO DATEINFO ....... %%D
  ECHO:
  ECHO:
  SET @
@@ -386,10 +388,70 @@
 
 
  rem ==========================================================================
- rem === SUBROUTINE: Get Complete Date/Time Info (Using DateInfo)   (OPTION #8)
- rem === Updated On: 15 Feb 2019 / 14 May 2018
+ rem === SUBROUTINE: Get Current Date and Time (Extended Method)    (OPTION #8)
+ rem === Updated On: 18 Sep 2024
  rem ==========================================================================
 :GetDate8
+ rem ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ rem Requires Windows XP/2003 or Higher, via Powershell
+ rem ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ SETLOCAL ENABLEDELAYEDEXPANSION
+
+ FOR /F "TOKENS=1-16" %%D IN ('Powershell Get-Date -Format ^'yyyy yy MMMM MMM MM dddd ddd dd HH hh mm ss fff tt zz K^' ') DO (
+	 SET @DATE=%%H/%%K/%%D
+	 SET @TIME12=%%M:%%N:%%O %%Q
+	 SET @YYYY=%%D
+	 SET @YY=%%E
+	 SET @MMMM=%%F
+	 SET @MMM=%%G
+	 SET @MM=%%H
+	 SET @DDDD=%%I
+	 SET @DDD=%%J
+	 SET @DAY=%%J
+	 SET @DD=%%K
+	 SET @HR=%%L
+	 SET @MIN=%%N
+	 SET @SEC=%%O
+	 SET @MSEC=%%P
+	 SET @TIME=%%M:%%N:%%O
+	 SET @TIME24=%%L:%%N:%%O
+	 SET @NOW=%%L%%N%%O
+	 SET @NOW_EXP=%%L.%%N.%%O
+	 SET @TZ=%%S
+ )
+
+ rem -- Determine EVEN or ODD Day
+ SET /A @DD_DIV_2=%@DD:~-1% %% 2
+ IF %@DD_DIV_2% GEQ 1 (
+	 SET @DATE_IS_ODD=TRUE
+	 SET @DATE_IS_EVEN=FALSE
+	 SET @DATE_IS=ODD
+ ) ELSE (
+	 SET @DATE_IS_ODD=FALSE
+	 SET @DATE_IS_EVEN=TRUE
+	 SET @DATE_IS=EVEN
+ )
+
+ rem -- Generate TimeStamp Variables
+ SET @BEGMONTH=%@MM%01%@YYYY%
+ SET @MMDDYYYY=%@MM%%@DD%%@YYYY%
+ SET @TODAY=%@YYYY%%@MM%%@DD%
+ SET @TODAY_EXP=%@YYYY%-%@MM%-%@DD%
+ SET @ZIPSTAMP=%@TODAY%-%@NOW%.ZIP
+ SET @FILESTAMP=%@TODAY%-%@NOW%.TXT
+ SET @TIMESTAMP=%@DATE:/=-% at %@TIME12::=.%
+ SET @TIMESTAMP24=%@DATE:/=-% at %@TIME%
+
+ CALL :Display "Option #8 - Windows XP/2003+, via Powershell" Option8
+ ENDLOCAL
+ GOTO :EOF
+
+
+ rem ==========================================================================
+ rem === SUBROUTINE: Get Complete Date/Time Info (Using DateInfo)   (OPTION #9)
+ rem === Updated On: 15 Feb 2019 / 14 May 2018
+ rem ==========================================================================
+:GetDate9
  rem ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  rem Requires Windows 2003 or Higher with BrainWave DateInfo.exe Utility
  rem ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -397,16 +459,16 @@
 
  CALL :GetDateInfoValues
 
- CALL :Display "Option #8 - Windows 2003+ with BrainWave DateInfo Utility" Option8
+ CALL :Display "Option #9 - Windows 2003+ with BrainWave DateInfo Utility" Option9
  ENDLOCAL
  GOTO :EOF
 
 
  rem ==========================================================================
- rem === SUBROUTINE: Single Pass DateIinfo (v4.0+)                  (OPTION #9)
+ rem === SUBROUTINE: Single Pass DateInfo (v4.0+)                  (OPTION #10)
  rem === Updated On: 15 Feb 2019 / 21 Dec 2018
  rem ==========================================================================
-:GetDate9
+:GetDate10
  rem ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  rem Requires Windows 2003 or Higher with BrainWave DateInfo.exe v4.0+
  rem ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -415,10 +477,10 @@
  SET @APP_ARCH=
  FOR /F "TOKENS=1-2 DELIMS=;" %%P IN ('DATEINFO --Script-Variables --filter^="date;time;@mm;dd;yy;@hr;@min;@sec" 2^>NUL') DO SET %%P=%%~Q
  IF DEFINED @APP_ARCH (
-	 CALL :Display "Option #9 - Windows with BrainWave DateInfo v4.1+ [--Script-Variables]" Option9a
+	 CALL :Display "Option #10 - Windows with BrainWave DateInfo v4.1+ [--Script-Variables]" Option10a
  ) ELSE (
 	 CALL :GetDateInfoValues
-	 CALL :Display "Option #9 - Windows with BrainWave DateInfo Utility [Old Method]" Option9b
+	 CALL :Display "Option #10 - Windows with BrainWave DateInfo Utility [Old Method]" Option10b
  )
  ENDLOCAL
  GOTO :EOF
@@ -545,4 +607,4 @@
  )
  NOW \n*** %@SCRIPTSTATUS%: %@VER% [\v] *** %@CHCP_STATUS%\n!@CRLF-%~1!
  GOTO :EOF
-                                                                                       
+                                                                          
