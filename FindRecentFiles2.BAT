@@ -1,16 +1,15 @@
-@REM - FindRecentFiles.BAT (21 Oct 2024 // 21 Oct 2024): Find files that are no more than 48 hours (2 days) old
+@REM - FindRecentFiles2.BAT (21 Oct 2024 // 21 Oct 2024): Find files that are no more than 48 hours (2 days) old
 @REM - Original Message: https://www.reddit.com/r/Batch/comments/1g94c24/comment/lt40xus/
 @ECHO OFF
 
  :::  This script will find all files in a given folder that are no more than 2 days
- :::  old, using the FORFILES utility. To run this script as is, you will also need the 
- :::  DATEINFO.EXE utility.  You can also perform the date calculations natively, 
- :::  but as you might imagine, I prefer to use my DATEINFO utility:
+ :::  old, but is based on the FILEHASH.EXE utility.  It is faster than the script 
+ :::  based on FORFILES:
  :::
- :::    DATEINFO.EXE - https://www.majorgeeks.com/files/details/dateinfo.html
+ :::    FILEHASH.EXE - https://www.majorgeeks.com/files/details/filehash.html
  :::
  :::  You would call this from the command-line as:
- :::    FindRecentFiles.BAT [path_to_check]  [max_age]
+ :::    FindRecentFiles2.BAT [path_to_check]  [max_age]
  :::
  :::  If no parameter is provided, it will check the current directory tree for 
  :::  files up to 2 days old
@@ -29,38 +28,28 @@
  :::
 
 
-:Variables -- v1.0.1
+:Variables -- v1.0.0
  SETLOCAL 
- SET #FILECOUNT=0
  SET #FOLDER=%~1& IF "%~1"=="" SET #FOLDER=%CD%
  SET #FOLDER=%#FOLDER:\\=\%
  SET #FOLDER=%#FOLDER%?
  SET #FOLDER=%#FOLDER:\?=%
  SET #FOLDER=%#FOLDER:?=%
  SET #RECENT=%~2& IF "%~2"=="" SET #RECENT=2
- SET #SEARCHDATE=& FOR /F "TOKENS=2 DELIMS=." %%D IN ('DATEINFO -p %#RECENT% "mm/dd/yyyy"') DO SET #SEARCHDATE=%%D
- SET #FORFILES=FORFILES -p "%#FOLDER%" -m *.* -s -d +%#SEARCHDATE% -c "CMD /C IF @ISDIR==FALSE ECHO	@FDATE	@FTIME	@PATH"
+ SET #DATE_TIME=mm/dd/yyyy hh:nn:ss AM/PM
 
 
-:Main -- Generate the List of Recent Files using FORFILES
+:Main -- Generate the List of Recent Files using FILEHASH
  ECHO Searching for Recently Changed Files...
  ECHO:
  ECHO  --- Start Search In .... "%#FOLDER%"
  ECHO  --- Maximum File Age ... %#RECENT% days
  ECHO:
- 
- PUSHD %#FOLDER%
- FOR /F "TOKENS=*" %%v IN ('%#FORFILES% 2^>NUL') DO (
-	 SET /A #FILECOUNT+=1
-	 ECHO     %%~v
- )
-
- ECHO:
- ECHO Recently Modified Files Found: %#FILECOUNT%
+ FILEHASH --XX64 -C -# -Z -S --NEWER-THAN=%#RECENT% --DF="%#DATE_TIME%" -R -D "%#FOLDER%" 2>NUL
 
 
 :ExitBatch -- Reset Environment Variables and Exit Batch File
  ENDLOCAL
  POPD
  EXIT /B 
-                                             
+                                                                           
